@@ -3,7 +3,9 @@
 echo "# Please input target branch"
 read branchname
 
-while read line
+diff=$(git diff $branchname --name-only)
+
+while read -u 9 line
 do
   git diff $branchname $line
   
@@ -25,7 +27,9 @@ do
         exit 1
         ;;
   esac
-done <(git diff $branchname --name-only)
+done 9<< FILE
+$diff
+FILE
 
 echo "\nFinish!"
 
